@@ -111,4 +111,128 @@ public class ColorPoint extends Point {
 ```
 
 위 코드는 일반 Point를 ColorPoint에 비교한 결과와 그 둘을 바꿔 비교한 결과가 다를 수 있다. <br>
+위 코드는 Point의 equals는 색상을 무시하고, ColorPoint의 equals는 입력 매개변수의 클래스 종류가 달라 매번 false만 반활할 것이다. <br>
 
+<br>
+
+그렇다면 계속 색상을 무시하도록 하면 해결이 될까? 라는 의문점이 든다. <br>
+
+```java
+    @Override public boolean equals(Object o) {
+        if (!(o instanceof Point))
+            return false;
+
+        if (!(o instanceof ColorPoint))
+            return o.equals(this);
+
+        return super.equals(o) && ((ColorPoint) o).color == color;
+    }
+```
+위 코드는 대칭성은 지키지만, 추이성을 깨버린다. <br>
+또 이 방식은 무한 재귀에 빠질 위험도 있다. <br>
+
+그렇다면 해법은 무엇일까? <br>
+구체 클래스를 확장해 새로운 값을 추가하면서 equals 규약을 만족시킬 방법은 존재하지 않는다....<br>
+-> 이 말은 얼핏, equals 안의 instanceof 검사를 getClass 검사로 바꾸면 규약도 지키고 값도 추가하면서 구체 클래스를 상속할 수 있다는 뜻으로 들린다. <br>
+<br>
+
+```java
+    @Override public boolean equals(Object o) {
+        if (o == null || o.getClass() != getClass())
+            return false;
+        Point p = (Point) o;
+        return p.x == x && p.y == y;
+    }
+```
+
+위 코드 같은 경우는 같은 구현 클래스의 객체와 비교할 때만 true를 반환한다. 괜찮아 보이지만 실제로는 활용할 수 없다. <br>
+이는 Point의 하위 클래스는 정의상 여전히 Point이므로 어디서든 Point로써 활용될 수 있어야 하는데 이 방식에서는 그렇지 못 한다. <br>
+<br>
+구체 클래스의 하위 클래스에서 값을 추가할 방법은 없지만 괜찮은 우회 방법이 하나 있다. <br>
+"상속 대신 컴포지션을 사용하는 것이다." <br>
+
+```java
+public class ColorPoint{
+    private final Point point;
+
+    private final Color color;
+
+    public ColorPoint(int x, int y, Color color){
+        if(color == null)
+          throw new NullPointerException();
+        point = new Point(x,y);
+        this.color = color;
+    }
+
+    public Point asPoint(){ 
+        return point;
+    }
+
+    @Override public boolean equals(Object o){
+        if (!(o instanceof ColorPoint))
+            return false; 
+        ColorPoint cp = (ColorPoint) o;
+        return cp.point.equals(point) && cp.color.equals(color); 
+    }
+}
+```
+
+위 코드는 Point를 상속하는 대신 Point를 ColorPoint의 private 필드로 두고, ColorPoint와 같은 위치의 일반 Point를 반환하는 뷰 메서드를 public으로 추가하는 식이다. <br>
+<br>
+- 일관성 : 두 객체가 같다면 앞으로도 영원히 같아야 한다는 뜻이다. <br>
+
+클래스가 불변이든 가변이든 equals의 판단에 신뢰할 수 없는 자원이 끼어들게 해서는 안 된다. <br>
+
+- null-아님 : 모든 객체가 null과 같지 않아야 한다는 뜻이다.
+
+<br>
+
+<br>
+
+### 지금까지 한 내용들을 모두 종합해서 양질의 equals 메서드 구현 방법을 단계별로 정리
+1. == 연산자를 사용해 입력이 자기 자신의 참조인지 확인한다.
+2. instanceof 연산자로 입력이 올바른 타입인지 확인한다.
+3. 입력을 올바른 타입으로 형변환한다.
+4. 입력 객체와 자기 자신의 대응되는 "핵심" 필드들이 모두 일치하는지 하나씩 검사한다.
+
+<br>
+아래는 전형적인 equals 메서드의 예이다. <br>
+
+
+```java
+public final class PhoneNumber {
+    private final short areaCode, prefix, lineNum;
+
+    public PhoneNumber(int areaCode, int prefix, int lineNum) {
+        this.areaCode = rangeCheck(areaCode, 999, "지역코드");
+        this.prefix   = rangeCheck(prefix,   999, "프리픽스");
+        this.lineNum  = rangeCheck(lineNum, 9999, "가입자 번호");
+    }
+
+    private static short rangeCheck(int val, int max, String arg) {
+        if (val < 0 || val > max)
+            throw new IllegalArgumentException(arg + ": " + val);
+        return (short) val;
+    }
+
+    @Override public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof PhoneNumber))
+            return false;
+        PhoneNumber pn = (PhoneNumber)o;
+        return pn.lineNum == lineNum && pn.prefix == prefix
+                && pn.areaCode == areaCode;
+    }
+
+    // 나머지 코드는 생략
+}
+```
+
+### 마지막 주의 사항
+1. equals를 재정의 할 땐 hashCode도 반드시 재정의를 해야 한다.
+2. 너무 복잡하게 해결하려 들지 말아야 한다. -> 필드들의 동치성만 검사해도 equals 규약을 어렵지 않게 지킬 수 있다.
+3. Object 외의 타입을 매개변수로 받는 equals 메서드는 선언하지 말아야 한다.
+
+### ⭐️ 핵심 정리
+꼭 필요한 경우가 아니면 equals를 재정의하지 말아야 한다. 많은 경우에 Object의 equals가 여러분이 원하는 비교를 정확히 수행해준다. 재정의해야 할 때는 그 클래스의 핵심 필드 모두를 빠짐없이, 다섯 가지 규약을 확실히 지켜가며 비교해야 한다.
