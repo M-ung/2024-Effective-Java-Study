@@ -29,5 +29,3 @@ public class member {
 
 <br>
 하지만 package-private 클래스 혹은 private 중첩 클래스라면 데이터 필드를 노출한다 해도 하등의 문제가 없다. <br>
-
-// 여기서부터 살짝 이해 이슈 
