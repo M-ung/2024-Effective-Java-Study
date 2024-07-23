@@ -74,3 +74,14 @@
 </table>
 
 <br />
+
+### 4장
+<table align='center'>
+<tr><th> 🧩 아이템 </th><th> 📚 주제 </th><th> 🔖 작성자의 글 </th></tr>
+<tr><td> 15 </td><td> 클래스와 멤버의 접근 권한을 최소화하라 </td><td> <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_15/클래스와_멤버의_접근_권한을_최소화하라_(김남기).md">남기</a>, <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_15/클래스와_멤버의_접근_권한을_최소화하라_(김선희).md">선희</a>, <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_15/클래스와_멤버의_접근_권한을_최소화하라_(김정목).md">정목</a>, <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_15/클래스와_멤버의_접근_권한을_최소화하라_(김지원).md">지원</a> </td></tr>
+
+<tr><td> 16 </td><td> public 클래스의 필드가 불변이어도 안전하지 않다 </td><td> <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_16/public_클래스의_필드가_불변이어도_안전하지_않다_(김남기).md">남기</a>, <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_16/public_클래스의_필드가_불변이어도_안전하지_않다_(김선희).md">선희</a>, <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_16/public_클래스의_필드가_불변이어도_안전하지_않다_(김정목).md">정목</a>, <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_16/public_클래스의_필드가_불변이어도_안전하지_않다_(김지원).md">지원</a> </td></tr>
+
+<tr><td> 17 </td><td> 변경 가능성을 최소화하라 </td><td> <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_18/상속보다는_컴포지션을_사용하라_(김남기).md">남기</a>, <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_18/상속보다는_컴포지션을_사용하라_(김선희).md">선희</a>, <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_18/상속보다는_컴포지션을_사용하라_(김정목).md">정목</a>, <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_18/상속보다는_컴포지션을_사용하라_(김지원).md">지원</a> </td></tr>
+
+<tr><td> 18 </td><td> 변경 가능성을 최소화하라 </td><td> <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_18/상속보다는_컴포지션을_사용하라_(김남기).md">남기</a>, <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_18/상속보다는_컴포지션을_사용하라_(김선희).md">선희</a>, <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_18/상속보다는_컴포지션을_사용하라_(김정목).md">정목</a>, <a href="https://github.com/2024-Effective-Java/2024-Effective-Java-Study/blob/main/4장/아이템_18/상속보다는_컴포지션을_사용하라_(김지원).md">지원</a> </td></tr>
